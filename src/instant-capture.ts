@@ -8,9 +8,11 @@ export default async function Command(props: LaunchProps<{ arguments: Arguments.
 
   try {
     const result = await appendToTodayDailyNote(content);
+    await closeMainWindow(clearRootSearchOptions);
     await showHUD(result.created ? "已创建并追加今日笔记" : "已追加到今日笔记", clearRootSearchOptions);
   } catch (error) {
     console.error("Instant capture failed", error);
+    await closeMainWindow(clearRootSearchOptions);
     await showHUD("追加失败，请检查设置或稍后再试", clearRootSearchOptions);
   }
 }
